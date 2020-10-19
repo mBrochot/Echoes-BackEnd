@@ -1,0 +1,17 @@
+version: '3.4'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: echoes_demo_jolisdegats
+    environment:
+      - APPLICATION_PORT=3310
+      - DATABASE_URL=mongodb://host.docker.internal:27017/echoes-demo
+      - DATABASE_SSL=false
+      - FOREST_AUTH_SECRET=d32802536a22af229554d56dd50d84fc51e20fc18fe0e4476f22ffc5d3ec76eb40e845f0292be4eb78dfc635e4ba8a2b
+      - FOREST_ENV_SECRET=77d550f81837d22eabd1dc5eb55a54b17e858f523d8cd1e2a6ec1080139cfa2f
+    ports:
+      - "3310:3310"
+    volumes:
+      - ./:/usr/src/app

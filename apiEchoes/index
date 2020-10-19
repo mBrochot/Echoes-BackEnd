@@ -1,0 +1,43 @@
+const express = require("express");
+const app = express();
+
+const formidable = require("express-formidable");
+app.use(formidable());
+
+const mongoose = require("mongoose");
+const cloudinary = require("cloudinary");
+
+require("dotenv").config();
+
+const cors = require("cors");
+app.use(cors());
+
+// Appel du modele et de la route User et users
+require("./models/User");
+const users = require("./routes/users");
+app.use(users);
+
+// Appel du modele et de la route Transaction et transactions
+require("./models/Transaction");
+const transactions = require("./routes/transactions");
+app.use(transactions);
+
+// Appel du modele et de la route Episode et episodes
+require("./models/Episode");
+const episodes = require("./routes/episodes.js");
+app.use(episodes);
+
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+});
+
+cloudinary.config({
+  cloud_name: "XXXXXXXX",
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+
+app.listen(process.env.PORT, () => console.log("Server started"));
